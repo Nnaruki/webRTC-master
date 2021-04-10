@@ -12,8 +12,8 @@ function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
       {'Copyright © '}
-      <Link color="inherit" href="https://naruki.biz">
-        NARUKI
+      <Link color="inherit" href="https://www.udemy.com/user/ham-san/">
+        はむさん
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
@@ -41,10 +41,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SignIn({ remotePeerName, setRemotePeerName, localPeerName,}) {
-  const label = 'Opponent';
+export default function SignIn({
+  localPeerName,
+  remotePeerName,
+  setRemotePeerName,
+}) {
+  const label = '相手の名前';
   const classes = useStyles();
-  const [disabled, setDisabled] = useState(false);
+  const [disabled, setDisabled] = useState(true);
   const [name, setName] = useState('');
   const [isComposed, setIsComposed] = useState(false);
 
@@ -53,60 +57,53 @@ export default function SignIn({ remotePeerName, setRemotePeerName, localPeerNam
     setDisabled(disabled);
   }, [name]);
 
-  const initializeRemotePeer = useCallback((e) => {
-    setRemotePeerName(name);
-    e.preventDefault();
-  },
-  [name, setRemotePeerName]
+  const initializeRemotePeer = useCallback(
+    (e) => {
+      setRemotePeerName(name);
+      e.preventDefault();
+    },
+    [name, setRemotePeerName]
   );
 
-    if (localPeerName === '') return <></>;
-    if (remotePeerName !== '') return <></>;
+  if (localPeerName === '') return <></>;
+  if (remotePeerName !== '') return <></>;
 
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
         <Typography component="h1" variant="h5">
-          Please insert {label} here.
+          {label}を入力してください
         </Typography>
-        <form className={classes.form} noValidate>          
-        <TextField
-            variant="outlined"
-            margin="normal"
-            required
+        <form className={classes.form} noValidate>
+          <TextField
+            autoFocus
             fullWidth
             label={label}
+            margin="normal"
             name="name"
             onChange={(e) => setName(e.target.value)}
             onCompositionEnd={() => setIsComposed(false)}
             onCompositionStart={() => setIsComposed(true)}
-            value={name}
             onKeyDown={(e) => {
-              console.log({ e });
               if (isComposed) return;
               if (e.target.value === '') return;
-                if (e.key === 'Enter'){
-                  initializeRemotePeer(e);
-                }
-              
+              if (e.key === 'Enter') initializeRemotePeer(e);
             }}
-            autoFocus
+            required
+            value={name}
+            variant="outlined"
           />
-
           <Button
-            type="submit"
-            fullWidth
-            variant="contained"
+            className={classes.submit}
             color="primary"
             disabled={disabled}
-            onClick={(e) => {
-              initializeRemotePeer(e);
-              e.preventDefault();
-            }}
-            className={classes.submit}
+            fullWidth
+            onClick={(e) => initializeRemotePeer(e)}
+            type="submit"
+            variant="contained"
           >
-            Dision
+            決定
           </Button>
         </form>
       </div>

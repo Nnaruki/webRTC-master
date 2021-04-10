@@ -1,19 +1,19 @@
-import Box from '@material-ui/core/Box';
-import Button from '@material-ui/core/Button';
-import Container from '@material-ui/core/Container';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import Link from '@material-ui/core/Link';
-import { makeStyles } from '@material-ui/core/styles';
-import TextField from '@material-ui/core/TextField';
-import Typography from '@material-ui/core/Typography';
 import React, { useCallback, useEffect, useState } from 'react';
+import Button from '@material-ui/core/Button';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import TextField from '@material-ui/core/TextField';
+import Link from '@material-ui/core/Link';
+import Box from '@material-ui/core/Box';
+import Typography from '@material-ui/core/Typography';
+import { makeStyles } from '@material-ui/core/styles';
+import Container from '@material-ui/core/Container';
 
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
       {'Copyright © '}
-      <Link color="inherit" href="https://naruki.biz">
-        NARUKI
+      <Link color="inherit" href="https://www.udemy.com/user/ham-san/">
+        はむさん
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
@@ -42,9 +42,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function SignIn({ localPeerName, setLocalPeerName }) {
-  const label = 'Your name';
+  const label = 'あなたの名前';
   const classes = useStyles();
-  const [disabled, setDisabled] = useState(false);
+  const [disabled, setDisabled] = useState(true);
   const [name, setName] = useState('');
   const [isComposed, setIsComposed] = useState(false);
 
@@ -53,11 +53,12 @@ export default function SignIn({ localPeerName, setLocalPeerName }) {
     setDisabled(disabled);
   }, [name]);
 
-  const initializeLocalPeer = useCallback((e) => {
-    setLocalPeerName(name);
-    e.preventDefault();
-  },
-  [name, setLocalPeerName]
+  const initializeLocalPeer = useCallback(
+    (e) => {
+      setLocalPeerName(name);
+      e.preventDefault();
+    },
+    [name, setLocalPeerName]
   );
 
   if (localPeerName !== '') return <></>;
@@ -67,45 +68,37 @@ export default function SignIn({ localPeerName, setLocalPeerName }) {
       <CssBaseline />
       <div className={classes.paper}>
         <Typography component="h1" variant="h5">
-          Please insert {label} here.
+          {label}を入力してください
         </Typography>
-        <form className={classes.form} noValidate>          
-        <TextField
-            variant="outlined"
-            margin="normal"
-            required
+        <form className={classes.form} noValidate>
+          <TextField
+            autoFocus
             fullWidth
             label={label}
+            margin="normal"
             name="name"
             onChange={(e) => setName(e.target.value)}
             onCompositionEnd={() => setIsComposed(false)}
             onCompositionStart={() => setIsComposed(true)}
             onKeyDown={(e) => {
-              console.log({ e });
               if (isComposed) return;
               if (e.target.value === '') return;
-                if (e.key === 'Enter'){
-                  initializeLocalPeer(e);
-                }
-              
+              if (e.key === 'Enter') initializeLocalPeer(e);
             }}
+            required
             value={name}
-            autoFocus
+            variant="outlined"
           />
-
           <Button
-            type="submit"
-            fullWidth
-            disabled={disabled}
-            variant="contained"
-            color="primary"
             className={classes.submit}
-            onClick={(e) => {
-              initializeLocalPeer(e);
-              e.preventDefault();
-            }}
+            color="primary"
+            disabled={disabled}
+            fullWidth
+            onClick={(e) => initializeLocalPeer(e)}
+            type="submit"
+            variant="contained"
           >
-            Dision
+            決定
           </Button>
         </form>
       </div>
