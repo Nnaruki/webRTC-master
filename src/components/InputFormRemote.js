@@ -13,7 +13,7 @@ function Copyright() {
     <Typography variant="body2" color="textSecondary" align="center">
       {'Copyright © '}
       <Link color="inherit" href="https://www.udemy.com/user/ham-san/">
-        はむさん
+        NARUKI
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
@@ -42,7 +42,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function SignIn({ rtcClient }) {
-  const label = '相手の名前';
+  const label = 'Please Your Name';
   const classes = useStyles();
   const [disabled, setDisabled] = useState(true);
   const [name, setName] = useState('');
@@ -56,7 +56,7 @@ export default function SignIn({ rtcClient }) {
   const initializeRemotePeer = useCallback(
     (e) => {
       rtcClient.remotePeerName = name;
-      rtcClient.setRtcClient(rtcClient);
+      rtcClient.setRtcClient();
       e.preventDefault();
     },
     [name, rtcClient]
