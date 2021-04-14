@@ -44,7 +44,8 @@ export default class FirebaseSignallingClient {
             sender: this.localPeerName,
             sessionDescription,
         });
-
-
+    }
+    async remove(path) {
+        await this.database.ref(path).remove();
     }
 }
