@@ -52,25 +52,67 @@ export default class RtcClient {
   get videoTrack() {
     return this.mediaStream.getVideoTracks()[0];
   }
+  
+  async offer() {
+    const sessionDescription = await this.createOffer();
+    await this.setLocalDescription(sessionDescription);
+    await this.sendOffer();
+  }
+
+  async createOffer() {
+    try {
+      return await this.rtcPeerConnection.createOffer();
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
+  async setLocalDescription(sessionDescription) {
+    try {
+      await this.rtcPeerConnection.setLocalDescription(sessionDescription);
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
+  async sendOffer() {
+    this.FirebaseSignallingClient.setPeerNames(
+      this.localPeerName,
+      this.remotePeerName
+    );
+    
+    await this.FirebaseSignallingClient.sendOffer(this.localDescription)
+  }
+
 
   setOntrack() {
     this.rtcPeerConnection.ontrack = (rtcTrackEvent) => {
       if (rtcTrackEvent.track.kind !== 'video') return;
+
       const remoteMediaStream = rtcTrackEvent.streams[0];
       this.remoteVideoRef.current.srcObject = remoteMediaStream;
       this.setRtcClient();
     };
+
     this.setRtcClient();
   }
 
-  connect(remotePeerName) {
+  async connect(remotePeerName) {
     this.remotePeerName = remotePeerName;
     this.setOnicecandidateCallback();
+    this.setOntrack();
+    await this.offer();
     this.setRtcClient();
   }
+
+  get localDescription() {
+    return this.rtcPeerConnection.localDescription.toJSON();
+  }
+
   setOnicecandidateCallback() {
     this.rtcPeerConnection.onicecandidate = (event) => {
-      if (event.candidate) {        
+      if (event.candidate) { 
+        console.log({ candidate });      
       }
     };
   }
