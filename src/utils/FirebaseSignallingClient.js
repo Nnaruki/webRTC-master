@@ -1,5 +1,6 @@
 import firebase from 'firebase/app';
 import 'firebase/database';
+import { __SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED } from 'react-dom';
 
 export default class FirebaseSignallingClient {
     constructor() {
@@ -25,7 +26,7 @@ export default class FirebaseSignallingClient {
         this.remotePeerName = remotePeerName;
     
     }
-    
+
     get targetRef() {
         return this.database.ref(this.remotePeerName);
     }
@@ -36,5 +37,14 @@ export default class FirebaseSignallingClient {
             sender: this.localPeerName,
             sessionDescription,
         });
+    }
+    async sendAnswer(sessionDescription) {
+        await this.targetRef.set({
+            type: 'answer',
+            sender: this.localPeerName,
+            sessionDescription,
+        });
+
+
     }
 }
