@@ -138,21 +138,19 @@ export default class RtcClient {
     } catch (e) {
       console.error(e);
     }
-    
   }
 
   get localDescription() {
     return this.rtcPeerConnection.localDescription.toJSON();
   }
 
-  async addIceCandinate(candidate) {
+  async addIceCandidate(candidate) {
     try {
-      const iceCandinate = new RTCIceCandidate(candidate);
-      await this.rtcPeerConnection.addIceCandinate(iceCandinate);
+      const iceCandidate = new RTCIceCandidate(candidate);
+      await this.rtcPeerConnection.addIceCandidate(iceCandidate);
     } catch (error) {
       console.error(error);
     }
-    
   }
 
   setOnicecandidateCallback() {
@@ -175,7 +173,7 @@ export default class RtcClient {
         if (data === null) return;
 
         console.log({ data });
-        const { candidate , sender, sessionDescription, type } = data;
+        const { candidate, sender, sessionDescription, type } = data;
         switch (type) {
           case 'offer':
             await this.answer(sender, sessionDescription);
@@ -183,8 +181,8 @@ export default class RtcClient {
           case 'answer':
             await this.saveReceivedSessionDescription(sessionDescription);
             break;
-          case 'candinate':
-            await this.addIceCandinate(candidate);
+          case 'candidate':
+            await this.addIceCandidate(candidate);
             break;
           default:
             this.setRtcClient();

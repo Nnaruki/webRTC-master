@@ -42,7 +42,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function SignIn({ rtcClient }) {
-  const label = 'Please Your Name';
+  const label = 'あなたの名前';
   const classes = useStyles();
   const [disabled, setDisabled] = useState(true);
   const [name, setName] = useState('');

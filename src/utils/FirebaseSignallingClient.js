@@ -24,37 +24,37 @@ export default class FirebaseSignallingClient {
     setPeerNames(localPeerName, remotePeerName) {
         this.localPeerName = localPeerName;
         this.remotePeerName = remotePeerName;
+      }
     
-    }
-
-    get targetRef() {
+      get targetRef() {
         return this.database.ref(this.remotePeerName);
-    }
-
-    async sendOffer(sessionDescription) {
+      }
+    
+      async sendOffer(sessionDescription) {
         await this.targetRef.set({
-            type:'offer',
-            sender: this.localPeerName,
-            sessionDescription,
+          type: 'offer',
+          sender: this.localPeerName,
+          sessionDescription,
         });
-    }
-    async sendAnswer(sessionDescription) {
+      }
+    
+      async sendAnswer(sessionDescription) {
         await this.targetRef.set({
-            type: 'answer',
-            sender: this.localPeerName,
-            sessionDescription,
+          type: 'answer',
+          sender: this.localPeerName,
+          sessionDescription,
         });
-    }
-    async sendCandinate(candidate) {
+      }
+    
+      async sendCandidate(candidate) {
         await this.targetRef.set({
-            type: 'candinate',
-            sender: this.localPeerName,
-            candidate,
+          type: 'candidate',
+          sender: this.localPeerName,
+          candidate,
         });
-    }
-
-
-    async remove(path) {
+      }
+    
+      async remove(path) {
         await this.database.ref(path).remove();
+      }
     }
-}
