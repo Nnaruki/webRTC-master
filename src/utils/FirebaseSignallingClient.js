@@ -45,6 +45,15 @@ export default class FirebaseSignallingClient {
             sessionDescription,
         });
     }
+    async sendCandinate(candidate) {
+        await this.targetRef.set({
+            type: 'candinate',
+            sender: this.localPeerName,
+            candidate,
+        });
+    }
+
+
     async remove(path) {
         await this.database.ref(path).remove();
     }
