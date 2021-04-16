@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Card ,
         CardActionArea ,
@@ -7,28 +7,34 @@ import { Card ,
         Typography, 
       } from '@material-ui/core';
 
-const useStyles = makeStyles({
-  root: {
-    maxWidth: 345,
-  },
-});
+
+import useDimensions from './books/useDimentions';
+
+const useStyles = makeStyles({});
 
 const Video = ({ isLocal, name, videoRef }) => {
+  const refCard = useRef(null);
+  const dimensionsCard = useDimensions(refCard);
   const classes = useStyles();
 
   return (
-    <Card className={classes.root}>
+    <Card ref={refCard}>
       <CardActionArea>
-        <video autoPlay muted={isLocal} ref={videoRef} />
+        <video
+          autoPlay
+          muted={isLocal}
+          ref={videoRef}
+          width={dimensionsCard.width}
+        />
         <CardContent>
           <Typography gutterBottom variant="h5" component="h2">
-           {name}
+            {name}
           </Typography>
         </CardContent>
       </CardActionArea>
       <CardActions></CardActions>
     </Card>
   );
-}
+};
 
 export default Video;
