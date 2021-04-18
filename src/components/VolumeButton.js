@@ -5,7 +5,7 @@ import IconButton from '@material-ui/core/IconButton';
 import VolumeOffIcon from '@material-ui/icons/VolumeOff';
 import VolumeUpIcon from '@material-ui/icons/VolumeUp';
 
-const useState = makeStyles({
+const useStyles = makeStyles({
     icon: {
         height: 38,
         width: 38,
@@ -20,6 +20,7 @@ const VolumeButton = ({
     refVolumeButton, 
 }) => {
     const Icon = muted ? VolumeOffIcon : VolumeUpIcon;
+    const classes = useStyles();
 
     return (
       <IconButton
