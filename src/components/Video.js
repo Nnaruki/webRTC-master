@@ -7,7 +7,7 @@ import { Card ,
         Typography, 
       } from '@material-ui/core';
 
-
+import AudioAnalyser from './AudioAnalyser';
 import useDimensions from './books/useDimentions';
 import VolumeButton from './VolumeButton';
 
@@ -36,6 +36,9 @@ const Video = ({ isLocal, name, videoRef, rtcClient }) => {
       </CardActionArea>
       <CardActions>
         <VolumeButton isLocal={isLocal} muted={muted} rtcClient={rtcClient} setMuted={setMuted} />
+        {!muted && videoRef.current && videoRef.current.srcObject && (
+          <AudioAnalyser audio={videoRef.current.srcObject}/>
+        )}
       </CardActions>
     </Card>
   );
