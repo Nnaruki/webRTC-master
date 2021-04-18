@@ -168,7 +168,6 @@ export default class RtcClient {
   setOnicecandidateCallback() {
     this.rtcPeerConnection.onicecandidate = async ({ candidate }) => {
       if (candidate) {
-        console.log({ candidate });
         await this.firebaseSignallingClient.sendCandidate(candidate.toJSON());
       }
     };
@@ -184,7 +183,6 @@ export default class RtcClient {
         const data = snapshot.val();
         if (data === null) return;
 
-        console.log({ data });
         const { candidate, sender, sessionDescription, type } = data;
         switch (type) {
           case 'offer':

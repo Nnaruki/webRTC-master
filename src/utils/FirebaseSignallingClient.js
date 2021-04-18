@@ -4,15 +4,25 @@ import { __SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED } from 'react-dom';
 
 export default class FirebaseSignallingClient {
     constructor() {
+      const {
+        REACT_APP_FIREBASE_API_KEY,
+        REACT_APP_FIREBASE_AUTH_DOMAIN,
+        REACT_APP_FIREBASE_DATABASE_URL,
+        REACT_APP_FIREBASE_PROJECT_ID,
+        REACT_APP_FIREBASE_STORAGE_BUCKET,
+        REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
+        REACT_APP_FIREBASE_APP_ID,
+      } = process.env;
+
         const firebaseConfig = {
-            apiKey: "AIzaSyA_EHsKntZmjsiT9NeXWLBHca-xIVXsraU",
-            authDomain: "webrtc-react-firebase-6a6c4.firebaseapp.com",
-            databaseURL: "https://webrtc-react-firebase-6a6c4-default-rtdb.firebaseio.com",
-            projectId: "webrtc-react-firebase-6a6c4",
-            storageBucket: "webrtc-react-firebase-6a6c4.appspot.com",
-            messagingSenderId: "361644327667",
-            appId: "1:361644327667:web:be2f531eb285a8ea4bad86",
-            measurementId: "G-LQ1YZHRVLR"
+            apiKey: REACT_APP_FIREBASE_API_KEY,
+            authDomain: REACT_APP_FIREBASE_AUTH_DOMAIN,
+            databaseURL: REACT_APP_FIREBASE_DATABASE_URL,
+            projectId: REACT_APP_FIREBASE_PROJECT_ID,
+            storageBucket: REACT_APP_FIREBASE_STORAGE_BUCKET,
+            messagingSenderId: REACT_APP_FIREBASE_STORAGE_BUCKET,
+            appId: REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
+            measurementId: REACT_APP_FIREBASE_APP_ID,
           };
           // Initialize Firebase
           if (firebase.apps.length === 0 ) firebase.initializeApp(firebaseConfig);
